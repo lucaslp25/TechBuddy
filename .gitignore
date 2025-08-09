@@ -1,10 +1,19 @@
+# Arquivos de log e de ajuda pessoal
 HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+/utils.txt
 
-### STS ###
+# Arquivos de build do Maven e Gradle
+target/
+build/
+.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos de configuração com segredos
+# Ignora o arquivo de propriedades principal, que contém segredos.
+/src/main/resources/application.properties
+
+### Arquivos de IDE ###
+
+# STS / Eclipse
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +22,18 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/

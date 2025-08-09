@@ -1,5 +1,5 @@
 spring.application.name=TechBuddy
 
-api.security.token.secret=${MY_KEY:DEFAULT_KEY}
+api.security.token.secret=COLOQUE-AQUI-SUA-CHAVE-SECRETA
 
 spring.profiles.active=test
