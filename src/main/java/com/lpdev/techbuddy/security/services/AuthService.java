@@ -13,6 +13,7 @@ import com.lpdev.techbuddy.security.dto.RegisterResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,11 +30,12 @@ public class AuthService {
     @Transactional
     public LoginResponseDTO login(LoginDTO dtoref){
 
-        User user = userRepository.findUserByEmail(dtoref.email()).orElseThrow(()-> new TechBuddyNotFoundException("Não foi encontrado esse email em nosso sistema."));
+        //grande aprendizado aqui: NÃO devo retornar esse erro, pois é uma falha de segurança da minha API fazer isso.
+       // User user = userRepository.findUserByEmail(dtoref.email()).orElseThrow(()-> new TechBuddyNotFoundException("Não foi encontrado esse email em nosso sistema."));
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(dtoref.email(), dtoref.password());
 
-        var auth = authenticationManager.authenticate(usernamePassword);
+        Authentication auth = authenticationManager.authenticate(usernamePassword);
 
         var authenticadeUser = (User) auth.getPrincipal();
 
@@ -53,9 +55,11 @@ public class AuthService {
             throw new TechBuddySecurityException("Role inválida!");
         }
 
-        if (userRepository.findUserByEmail(dtoref.email()).isPresent()){
-            throw new TechBuddyConflictException("O email: " + dtoref.email() + " ja está cadastrado no sistema!");
-        }
+//        if (userRepository.findUserByEmail(dtoref.email()).isPresent()){
+//            throw new TechBuddyConflictException("O email: " + dtoref.email() + " ja está cadastrado no sistema!");
+//        }
+        //aqui é a mesma situação do login, deixarei comentado para lembrar
+
 
         String pass = passwordEncoder.encode(dtoref.password());
 
