@@ -1,9 +1,10 @@
 package com.lpdev.techbuddy.security.services;
 
-import com.lpdev.techbuddy.exceptions.TechBuddyConflictException;
-import com.lpdev.techbuddy.exceptions.TechBuddyNotFoundException;
 import com.lpdev.techbuddy.exceptions.TechBuddySecurityException;
+import com.lpdev.techbuddy.model.entities.DevProfile;
+import com.lpdev.techbuddy.model.entities.MentorProfile;
 import com.lpdev.techbuddy.model.entities.User;
+import com.lpdev.techbuddy.model.entities.UserProfile;
 import com.lpdev.techbuddy.model.enums.UserRole;
 import com.lpdev.techbuddy.repositories.UserRepository;
 import com.lpdev.techbuddy.security.dto.LoginDTO;
@@ -60,10 +61,16 @@ public class AuthService {
 //        }
         //aqui é a mesma situação do login, deixarei comentado para lembrar
 
-
         String pass = passwordEncoder.encode(dtoref.password());
 
         User user = new User(dtoref.name(), dtoref.email(), pass,dtoref.role());
+
+        UserProfile userProfile = switch (dtoref.role()){
+            case DEV_BUDDY -> userProfile = new DevProfile(user);
+            case MENTOR_BUDDY -> userProfile = new MentorProfile(user);
+        };
+
+        user.setUserProfile(userProfile);
 
         user = userRepository.save(user);
 
