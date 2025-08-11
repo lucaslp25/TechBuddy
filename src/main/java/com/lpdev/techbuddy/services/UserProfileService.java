@@ -2,6 +2,7 @@ package com.lpdev.techbuddy.services;
 
 import com.lpdev.techbuddy.dto.UpdateDevProfileDTO;
 import com.lpdev.techbuddy.dto.UpdateMentorProfileDTO;
+import com.lpdev.techbuddy.dto.UserProfileDTO;
 import com.lpdev.techbuddy.exceptions.TechBuddyUnprocessableException;
 import com.lpdev.techbuddy.model.entities.DevProfile;
 import com.lpdev.techbuddy.model.entities.MentorProfile;
@@ -47,7 +48,6 @@ public class UserProfileService {
         userRepository.save(profile.getUser());
     }
 
-
     private UserProfile getUserProfile() {
 
         //pegando o contexto do usuario logado
@@ -60,34 +60,31 @@ public class UserProfileService {
         return profile;
     }
 
-
     private void updateDevProfileFields(DevProfile devProfile, UpdateDevProfileDTO dto) {
+        updateProfile(devProfile, dto);
 
-        devProfile.setProfileName(dto.profileName());
-        devProfile.setHeadline(dto.headline());
-        devProfile.setProfileBio(dto.profileBio());
-        devProfile.setProfilePictureUrl(dto.profilePictureUrl());
-        devProfile.setProfileLocation(dto.profileLocation());
-        devProfile.setProfileLinkedinUrl(dto.profileLinkedinUrl());
-        devProfile.setProfileGithubUrl(dto.profileGithubUrl());
-        devProfile.setLearningGoals(dto.learningGoals());
-        devProfile.setCurrentSkillsLevel(dto.currentSkillsLevel());
-        devProfile.setProfileStacks(dto.stacks());
+        devProfile.setLearningGoals(dto.getLearningGoals());
+        devProfile.setCurrentSkillsLevel(dto.getCurrentSkillsLevel());
     }
 
     private void updateMentorProfileFields(MentorProfile mentorProfile, UpdateMentorProfileDTO dto) {
+        updateProfile(mentorProfile, dto);
 
-        mentorProfile.setProfileName(dto.profileName());
-        mentorProfile.setHeadline(dto.headline());
-        mentorProfile.setProfileBio(dto.profileBio());
-        mentorProfile.setProfilePictureUrl(dto.profilePictureUrl());
-        mentorProfile.setProfileLocation(dto.profileLocation());
-        mentorProfile.setProfileLinkedinUrl(dto.profileLinkedinUrl());
-        mentorProfile.setProfileGithubUrl(dto.profileGithubUrl());
-        mentorProfile.setProfileStacks(dto.stacks());
-        mentorProfile.setExperienceYears(dto.experienceYears());
-        mentorProfile.setCompany(dto.company());
-        mentorProfile.setProfissionalTitle(dto.profissionalTitle());
-        mentorProfile.setAvaliableForMentoring(dto.avaliableForMentoring());
+        mentorProfile.setExperienceYears(dto.getExperienceYears());
+        mentorProfile.setCompany(dto.getCompany());
+        mentorProfile.setProfessionalTitle(dto.getProfessionalTitle());
+        mentorProfile.setAvaliableForMentoring(dto.isAvaliableForMentoring());
+    }
+
+    private void updateProfile(UserProfile userProfile, UserProfileDTO dto){
+
+        userProfile.setProfileName(dto.getProfileName());
+        userProfile.setHeadline(dto.getHeadline());
+        userProfile.setProfileBio(dto.getProfileBio());
+        userProfile.setProfilePictureUrl(dto.getProfilePictureUrl());
+        userProfile.setProfileLocation(dto.getProfileLocation());
+        userProfile.setProfileLinkedinUrl(dto.getProfileLinkedinUrl());
+        userProfile.setProfileGithubUrl(dto.getProfileGithubUrl());
+        userProfile.setProfileStacks(dto.getProfileStacks());
     }
 }

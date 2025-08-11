@@ -1,27 +1,38 @@
 package com.lpdev.techbuddy.dto;
 
 import com.lpdev.techbuddy.model.entities.DevProfile;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Set;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateDevProfileDTO extends UserProfileDTO{
 
 
-public record UpdateDevProfileDTO(
-        String profileName,
-        String headline,
-        String profileBio,
-        String profilePictureUrl,
-        String profileLocation,
-        String profileLinkedinUrl,
-        String profileGithubUrl,
-        Set<String> stacks,
-        String learningGoals,
-        String currentSkillsLevel
-) {
+        private String learningGoals;
 
-    public UpdateDevProfileDTO(DevProfile entity){
-        this(entity.getProfileName(), entity.getHeadline(), entity.getProfileBio(), entity.getProfilePictureUrl(), entity.getProfileLocation(),
-                entity.getProfileLinkedinUrl(), entity.getProfileGithubUrl(), entity.getProfileStacks(),
-                entity.getLearningGoals(), entity.getCurrentSkillsLevel());
+        @NotBlank(message = "Você precisa informar seu nivel atual para a plataforma poder lhe ajudar melhor.")
+        private String currentSkillsLevel;
+
+    public UpdateDevProfileDTO(DevProfile devProfile){
+        super();
+
+        this.setProfileName(devProfile.getProfileName());
+        this.setHeadline(devProfile.getHeadline());
+        this.setProfileBio(devProfile.getProfileBio());
+        this.setProfilePictureUrl(devProfile.getProfilePictureUrl());
+        this.setProfileLocation(devProfile.getProfileLocation());
+        this.setProfileLinkedinUrl(devProfile.getProfileLinkedinUrl());
+        this.setProfileGithubUrl(devProfile.getProfileGithubUrl());
+        this.setProfileStacks(devProfile.getProfileStacks());
+
+        this.learningGoals = devProfile.getLearningGoals();
+        this.currentSkillsLevel = devProfile.getCurrentSkillsLevel();
     }
 
 }

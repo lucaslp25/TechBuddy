@@ -1,27 +1,45 @@
 package com.lpdev.techbuddy.dto;
 
 import com.lpdev.techbuddy.model.entities.MentorProfile;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Set;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateMentorProfileDTO extends UserProfileDTO {
 
-public record UpdateMentorProfileDTO(
-        String profileName,
-        String headline,
-        String profileBio,
-        String profilePictureUrl,
-        String profileLocation,
-        String profileLinkedinUrl,
-        String profileGithubUrl,
-        Set<String> stacks,
-        Integer experienceYears,
-        String company,
-        String profissionalTitle,
-        boolean avaliableForMentoring
+    @NotNull(message = "Você como mentor precisa dizer quantos anos tem de experiência.")
+    private Integer experienceYears;
 
-) {
+    private String company;
 
-    public UpdateMentorProfileDTO(MentorProfile entity){
-        this(entity.getProfileName(), entity.getHeadline(), entity.getProfileBio(), entity.getProfilePictureUrl(), entity.getProfileLocation(), entity.getProfileLinkedinUrl(), entity.getProfileGithubUrl(), entity.getProfileStacks(), entity.getExperienceYears(), entity.getCompany(), entity.getProfissionalTitle(), entity.isAvaliableForMentoring());
+    @NotBlank(message = "Titulo profissional obrigatório.")
+    private String professionalTitle;
+
+    private boolean avaliableForMentoring;
+
+    public UpdateMentorProfileDTO(MentorProfile mentorProfile) {
+        super();
+
+        this.setProfileName(mentorProfile.getProfileName());
+        this.setHeadline(mentorProfile.getHeadline());
+        this.setProfileBio(mentorProfile.getProfileBio());
+        this.setProfilePictureUrl(mentorProfile.getProfilePictureUrl());
+        this.setProfileLocation(mentorProfile.getProfileLocation());
+        this.setProfileLinkedinUrl(mentorProfile.getProfileLinkedinUrl());
+        this.setProfileGithubUrl(mentorProfile.getProfileGithubUrl());
+        this.setProfileStacks(mentorProfile.getProfileStacks());
+
+        this.experienceYears = mentorProfile.getExperienceYears();
+        this.company = mentorProfile.getCompany();
+        this.professionalTitle = mentorProfile.getProfessionalTitle();
+        this.avaliableForMentoring = mentorProfile.isAvaliableForMentoring();
     }
 
 }
