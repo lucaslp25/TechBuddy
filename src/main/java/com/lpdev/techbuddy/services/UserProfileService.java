@@ -30,7 +30,7 @@ public class UserProfileService {
         if (profile instanceof DevProfile devProfile) {
             updateDevProfileFields(devProfile, dtoRef);
         }else{
-            throw new TechBuddyUnprocessableException("Tipo de perfil e/ou dados enviados inválidos.");
+            throw new TechBuddyUnprocessableException("Não foi possivel atualizar o perfil: Seu perfil não é de desenvolvedor.");
         }
         userRepository.save(profile.getUser());
     }
@@ -43,7 +43,7 @@ public class UserProfileService {
         if (profile instanceof MentorProfile mentorProfile) {
             updateMentorProfileFields(mentorProfile, dtoRef);
         }else{
-            throw new TechBuddyUnprocessableException("Tipo de perfil e/ou dados enviados inválidos.");
+            throw new TechBuddyUnprocessableException("Não foi possivel atualizar o perfil: Seu perfil não é de Mentor.");
         }
         userRepository.save(profile.getUser());
     }
