@@ -22,7 +22,7 @@ public class UpdateMentorProfileDTO extends UserProfileDTO {
     @NotBlank(message = "Titulo profissional obrigatório.")
     private String professionalTitle;
 
-    private boolean avaliableForMentoring;
+    private boolean availableForMentoring;
 
     public UpdateMentorProfileDTO(MentorProfile mentorProfile) {
         super();
@@ -39,7 +39,7 @@ public class UpdateMentorProfileDTO extends UserProfileDTO {
         this.experienceYears = mentorProfile.getExperienceYears();
         this.company = mentorProfile.getCompany();
         this.professionalTitle = mentorProfile.getProfessionalTitle();
-        this.avaliableForMentoring = mentorProfile.isAvaliableForMentoring();
+        this.availableForMentoring = mentorProfile.isAvailableForMentoring();
     }
 
 }

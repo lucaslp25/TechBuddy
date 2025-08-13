@@ -1,8 +1,10 @@
 package com.lpdev.techbuddy.services;
 
+import com.lpdev.techbuddy.dto.MentorProfileViewDTO;
 import com.lpdev.techbuddy.dto.UpdateDevProfileDTO;
 import com.lpdev.techbuddy.dto.UpdateMentorProfileDTO;
 import com.lpdev.techbuddy.dto.UserProfileDTO;
+import com.lpdev.techbuddy.exceptions.TechBuddyNotFoundException;
 import com.lpdev.techbuddy.exceptions.TechBuddyUnprocessableException;
 import com.lpdev.techbuddy.model.entities.DevProfile;
 import com.lpdev.techbuddy.model.entities.MentorProfile;
@@ -12,6 +14,9 @@ import com.lpdev.techbuddy.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserProfileService {
@@ -32,7 +37,6 @@ public class UserProfileService {
         }else{
             throw new TechBuddyUnprocessableException("Não foi possivel atualizar o perfil: Seu perfil não é de desenvolvedor.");
         }
-        userRepository.save(profile.getUser());
     }
 
     @Transactional
@@ -45,7 +49,6 @@ public class UserProfileService {
         }else{
             throw new TechBuddyUnprocessableException("Não foi possivel atualizar o perfil: Seu perfil não é de Mentor.");
         }
-        userRepository.save(profile.getUser());
     }
 
     private UserProfile getUserProfile() {
@@ -73,7 +76,7 @@ public class UserProfileService {
         mentorProfile.setExperienceYears(dto.getExperienceYears());
         mentorProfile.setCompany(dto.getCompany());
         mentorProfile.setProfessionalTitle(dto.getProfessionalTitle());
-        mentorProfile.setAvaliableForMentoring(dto.isAvaliableForMentoring());
+        mentorProfile.setAvailableForMentoring(dto.isAvailableForMentoring());
     }
 
     private void updateProfile(UserProfile userProfile, UserProfileDTO dto){
@@ -86,5 +89,37 @@ public class UserProfileService {
         userProfile.setProfileLinkedinUrl(dto.getProfileLinkedinUrl());
         userProfile.setProfileGithubUrl(dto.getProfileGithubUrl());
         userProfile.setProfileStacks(dto.getProfileStacks());
+    }
+
+    @Transactional(readOnly = true)
+    public Set<MentorProfileViewDTO> findAllMentorProfiles() {
+
+        Set<MentorProfile> mentors = userRepository.findAllMentorProfiles();
+
+        return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
+    }
+
+    @Transactional(readOnly = true)
+    public Set<MentorProfileViewDTO> findAllAvailableMentorProfiles() {
+
+        Set<MentorProfile> mentors = userRepository.findAllAvailableMentorProfiles();
+
+        return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
+    }
+
+    @Transactional(readOnly = true)
+    public MentorProfileViewDTO findMentorProfileByUsername(String username) {
+
+        MentorProfile mentor = userRepository.findMentorProfileByUsername(username).orElseThrow(()-> new TechBuddyNotFoundException("Nenhum mentor com o username: " + username + " foi encontrado."));
+
+        return new MentorProfileViewDTO(mentor);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<MentorProfileViewDTO> findMentorsProfileByStack(String stack) {
+
+        Set<MentorProfile> mentors = userRepository.findAllMentorProfilesByStack(stack);
+
+        return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
     }
 }

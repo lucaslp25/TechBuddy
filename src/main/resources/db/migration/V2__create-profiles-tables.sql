@@ -31,7 +31,7 @@ CREATE TABLE tb_mentor_profiles(
     experience_years INT,
     company VARCHAR(100),
     professional_title VARCHAR(100),
-    avaliable_for_mentoring BOOLEAN DEFAULT TRUE,
+    available_for_mentoring BOOLEAN DEFAULT TRUE,
 
     CONSTRAINT fk_profile_mentor FOREIGN KEY (user_id) REFERENCES tb_user_profiles(user_id)
 );

@@ -53,6 +53,15 @@ public class User implements Serializable , UserDetails{
         this.role = role;
     }
 
+    @Builder
+    public User(Long id, String name, String email, String password, UserRole role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(role.getAuthority());

@@ -27,12 +27,12 @@ public class MentorProfile extends UserProfile implements Serializable{
     @Column(length = 100)
     private String professionalTitle; // ex: Back-end Java Senior
 
-    private boolean avaliableForMentoring; //true por padrão
+    private boolean availableForMentoring; //true por padrão
 
     @Builder
     public MentorProfile(User user) {
         super(user);
-        this.avaliableForMentoring = true;
+        this.availableForMentoring = true;
     }
 
 }

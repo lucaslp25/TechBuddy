@@ -5,10 +5,7 @@ import com.lpdev.techbuddy.dto.UpdateMentorProfileDTO;
 import com.lpdev.techbuddy.services.UserProfileService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/profiles")
