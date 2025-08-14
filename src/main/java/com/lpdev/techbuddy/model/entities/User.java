@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -44,6 +46,13 @@ public class User implements Serializable , UserDetails{
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserProfile userProfile;
+
+    @OneToMany(mappedBy = "devRequester")
+    private Set<MentorshipRequest> devRequests = new HashSet<>();
+
+    @OneToMany(mappedBy = "mentorRequested")
+    private Set<MentorshipRequest> mentorRequests = new HashSet<>();
+
 
     @Builder
     public User(String name, String email, String password, UserRole role) {
