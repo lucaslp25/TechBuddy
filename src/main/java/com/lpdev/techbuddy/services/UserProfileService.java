@@ -11,7 +11,7 @@ import com.lpdev.techbuddy.model.entities.MentorProfile;
 import com.lpdev.techbuddy.model.entities.User;
 import com.lpdev.techbuddy.model.entities.UserProfile;
 import com.lpdev.techbuddy.repositories.UserRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.lpdev.techbuddy.utils.AuthUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,15 +22,19 @@ import java.util.stream.Collectors;
 public class UserProfileService {
 
     private final UserRepository userRepository;
+    private final AuthUtils authUtils;
 
-    public UserProfileService(UserRepository userRepository) {
+    public UserProfileService(UserRepository userRepository, AuthUtils authUtils) {
         this.userRepository = userRepository;
+        this.authUtils = authUtils;
     }
 
     @Transactional
     public void updateMyDevProfile(UpdateDevProfileDTO dtoRef) {
 
-        UserProfile profile = getUserProfile();
+        User user = authUtils.checkAuth();
+
+        UserProfile profile = user.getUserProfile();
 
         if (profile instanceof DevProfile devProfile) {
             updateDevProfileFields(devProfile, dtoRef);
@@ -42,25 +46,15 @@ public class UserProfileService {
     @Transactional
     public void updateMyMentorProfile(UpdateMentorProfileDTO dtoRef) {
 
-        UserProfile profile = getUserProfile();
+        User user = authUtils.checkAuth();
+
+        UserProfile profile = user.getUserProfile();
 
         if (profile instanceof MentorProfile mentorProfile) {
             updateMentorProfileFields(mentorProfile, dtoRef);
         }else{
             throw new TechBuddyUnprocessableException("Não foi possivel atualizar o perfil: Seu perfil não é de Mentor.");
         }
-    }
-
-    private UserProfile getUserProfile() {
-
-        //pegando o contexto do usuario logado
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User user = userRepository.findUserByEmail(userEmail).orElseThrow(() -> new IllegalStateException("User not found"));
-
-        UserProfile profile = user.getUserProfile();
-
-        return profile;
     }
 
     private void updateDevProfileFields(DevProfile devProfile, UpdateDevProfileDTO dto) {
