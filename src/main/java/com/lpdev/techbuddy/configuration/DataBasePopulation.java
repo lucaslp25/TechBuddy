@@ -50,6 +50,8 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor1.setCompany("TechCorp");
         mentor1.setProfessionalTitle("Engenheira de Software Sênior");
         mentor1.setAvailableForMentoring(true);
+        mentor1.setAverageRating(0.0);
+        mentor1.setTotalMentorships(0L);
         // Associando as duas entidades
         userMentor1.setUserProfile(mentor1);
         mentor1.setUser(userMentor1);
@@ -71,6 +73,8 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor2.setCompany("Innovatech");
         mentor2.setProfessionalTitle("Frontend Specialist");
         mentor2.setAvailableForMentoring(true);
+        mentor2.setAverageRating(0.0);
+        mentor2.setTotalMentorships(0L);
         userMentor2.setUserProfile(mentor2);
         mentor2.setUser(userMentor2);
         usersToSave.add(userMentor2);
@@ -91,6 +95,8 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor3.setCompany("Data Insights");
         mentor3.setProfessionalTitle("Data Scientist");
         mentor3.setAvailableForMentoring(false);
+        mentor3.setAverageRating(0.0);
+        mentor3.setTotalMentorships(0L);
         userMentor3.setUserProfile(mentor3);
         mentor3.setUser(userMentor3);
         usersToSave.add(userMentor3);
@@ -111,6 +117,8 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor4.setCompany("Cloud Masters");
         mentor4.setProfessionalTitle("SRE");
         mentor4.setAvailableForMentoring(true);
+        mentor4.setAverageRating(0.0);
+        mentor4.setTotalMentorships(0L);
         userMentor4.setUserProfile(mentor4);
         mentor4.setUser(userMentor4);
         usersToSave.add(userMentor4);

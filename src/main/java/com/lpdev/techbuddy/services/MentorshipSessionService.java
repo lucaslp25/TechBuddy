@@ -71,7 +71,7 @@ public class MentorshipSessionService {
             throw new TechBuddyUnprocessableException("Você não tem permissão para cancelar essa mentoria!");
         }
 
-        if (sesh.getStatus() != SessionStatus.SCHEDULED || sesh.getStatus() != SessionStatus.WAITING_FOR_SCHEDULE) {
+        if (sesh.getStatus() != SessionStatus.SCHEDULED && sesh.getStatus() != SessionStatus.WAITING_FOR_SCHEDULE) {
             throw new TechBuddyUnprocessableException("Essa sessão não pode mais ser cancelada, pois seu status atual é: " + sesh.getStatus());
         }
 
@@ -109,7 +109,7 @@ public class MentorshipSessionService {
             throw new TechBuddyUnprocessableException("Você não tem permissão para marcar essa mentoria como concluida!");
         }
 
-        if (sesh.getStatus() != SessionStatus.SCHEDULED || sesh.getStatus() != SessionStatus.WAITING_FOR_SCHEDULE) {
+        if (sesh.getStatus() != SessionStatus.SCHEDULED && sesh.getStatus() != SessionStatus.WAITING_FOR_SCHEDULE) {
             throw new TechBuddyUnprocessableException("Essa sessão não pode mais ser concluida, pois seu status atual é: " + sesh.getStatus());
         }
 

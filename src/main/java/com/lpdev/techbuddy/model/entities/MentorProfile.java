@@ -1,9 +1,6 @@
 package com.lpdev.techbuddy.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -29,10 +26,22 @@ public class MentorProfile extends UserProfile implements Serializable{
 
     private boolean availableForMentoring; //true por padrão
 
+    private Double averageRating = 0.0;
+
+    private Long totalMentorships = 0L;
+
     @Builder
     public MentorProfile(User user) {
         super(user);
         this.availableForMentoring = true;
+        this.averageRating = 0.0;
+        this.totalMentorships = 0L;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        averageRating = 0.0;
+        totalMentorships = 0L;
     }
 
 }

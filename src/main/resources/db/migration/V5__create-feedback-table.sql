@@ -6,8 +6,8 @@ CREATE TABLE tb_feedback(
     rating NUMERIC(2,1) NOT NULL,
     comment TEXT,
     session_id BIGINT NOT NULL UNIQUE,
-    author_id BIGINT NOT NULL UNIQUE,
-    target_id BIGINT NOT NULL UNIQUE,
+    author_id BIGINT NOT NULL,
+    target_id BIGINT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE,
 
     CONSTRAINT fk_session_id FOREIGN KEY (session_id) REFERENCES tb_mentorship_sessions(id),

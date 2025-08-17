@@ -6,6 +6,8 @@ import java.util.Set;
 
 public record MentorProfileViewDTO(
 
+        Double averageRating,
+        Long totalMentorships,
         String profileName,
         String headline,
         String profileBio,
@@ -20,10 +22,22 @@ public record MentorProfileViewDTO(
         boolean isAvaliableForMentoring
 ) {
 
-    public MentorProfileViewDTO(MentorProfile entity){
-        this(entity.getProfileName(), entity.getHeadline(), entity.getProfileBio(), entity.getProfilePictureUrl(),
-                entity.getProfileLocation(), entity.getProfileLinkedinUrl(), entity.getProfileGithubUrl(), entity.getProfileStacks(),
-                entity.getExperienceYears(), entity.getCompany(), entity.getProfessionalTitle(), entity.isAvailableForMentoring());
+    public MentorProfileViewDTO(MentorProfile entity) {
+        this(
+                entity.getAverageRating(),
+                entity.getTotalMentorships(),
+                entity.getProfileName(),
+                entity.getHeadline(),
+                entity.getProfileBio(),
+                entity.getProfilePictureUrl(),
+                entity.getProfileLocation(),
+                entity.getProfileLinkedinUrl(),
+                entity.getProfileGithubUrl(),
+                entity.getProfileStacks(),
+                entity.getExperienceYears(),
+                entity.getCompany(),
+                entity.getProfessionalTitle(),
+                entity.isAvailableForMentoring());
     }
 
 }

@@ -24,7 +24,7 @@ public class Feedback implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Double rating;
+    private Integer rating;
 
     @Lob
     private String comment;
