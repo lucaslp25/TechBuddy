@@ -38,10 +38,10 @@ public class MentorProfile extends UserProfile implements Serializable{
         this.totalMentorships = 0L;
     }
 
-    @PrePersist
-    public void prePersist(){
-        averageRating = 0.0;
-        totalMentorships = 0L;
-    }
+//    @PrePersist
+//    public void prePersist(){
+//        averageRating = 0.0;
+//        totalMentorships = 0L;
+//    }
 
 }

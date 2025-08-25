@@ -30,12 +30,11 @@ public class DataBasePopulation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        //boiler plate gerado por IA
-
         userRepository.deleteAll();
 
         List<User> usersToSave = new ArrayList<>();
 
+        // Mentor 1: Ana Silva
         User userMentor1 = new User(null,"Ana Silva", "ana.silva@mentor.com", passwordEncoder.encode("senha123"), UserRole.MENTOR_BUDDY);
         MentorProfile mentor1 = new MentorProfile();
         mentor1.setProfileName("Ana Silva");
@@ -50,8 +49,9 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor1.setCompany("TechCorp");
         mentor1.setProfessionalTitle("Engenheira de Software Sênior");
         mentor1.setAvailableForMentoring(true);
-        mentor1.setAverageRating(0.0);
-        mentor1.setTotalMentorships(0L);
+        // --- DADOS DE RATING ADICIONADOS ---
+        mentor1.setAverageRating(4.8);
+        mentor1.setTotalMentorships(15L);
         // Associando as duas entidades
         userMentor1.setUserProfile(mentor1);
         mentor1.setUser(userMentor1);
@@ -73,8 +73,9 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor2.setCompany("Innovatech");
         mentor2.setProfessionalTitle("Frontend Specialist");
         mentor2.setAvailableForMentoring(true);
-        mentor2.setAverageRating(0.0);
-        mentor2.setTotalMentorships(0L);
+        // --- DADOS DE RATING ADICIONADOS ---
+        mentor2.setAverageRating(4.5);
+        mentor2.setTotalMentorships(8L);
         userMentor2.setUserProfile(mentor2);
         mentor2.setUser(userMentor2);
         usersToSave.add(userMentor2);
@@ -95,8 +96,9 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor3.setCompany("Data Insights");
         mentor3.setProfessionalTitle("Data Scientist");
         mentor3.setAvailableForMentoring(false);
-        mentor3.setAverageRating(0.0);
-        mentor3.setTotalMentorships(0L);
+        // --- DADOS DE RATING ADICIONADOS ---
+        mentor3.setAverageRating(4.9);
+        mentor3.setTotalMentorships(22L);
         userMentor3.setUserProfile(mentor3);
         mentor3.setUser(userMentor3);
         usersToSave.add(userMentor3);
@@ -117,8 +119,9 @@ public class DataBasePopulation implements CommandLineRunner {
         mentor4.setCompany("Cloud Masters");
         mentor4.setProfessionalTitle("SRE");
         mentor4.setAvailableForMentoring(true);
-        mentor4.setAverageRating(0.0);
-        mentor4.setTotalMentorships(0L);
+        // --- DADOS DE RATING ADICIONADOS ---
+        mentor4.setAverageRating(4.2);
+        mentor4.setTotalMentorships(5L);
         userMentor4.setUserProfile(mentor4);
         mentor4.setUser(userMentor4);
         usersToSave.add(userMentor4);

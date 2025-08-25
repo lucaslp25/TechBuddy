@@ -1,6 +1,7 @@
 package com.lpdev.techbuddy.controllers;
 
 import com.lpdev.techbuddy.dto.MentorProfileViewDTO;
+import com.lpdev.techbuddy.dto.MentorSearchCriteriaDTO;
 import com.lpdev.techbuddy.exceptions.TechBuddyNotFoundException;
 import com.lpdev.techbuddy.services.UserProfileService;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,13 @@ public class MentorController {
 
         MentorProfileViewDTO dto = userProfileService.findMentorProfileByUsername(username);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "/criteria")
+    public ResponseEntity<Set<MentorProfileViewDTO>> findMentorByCriteria(@RequestBody MentorSearchCriteriaDTO dtoRef) {
+
+        Set<MentorProfileViewDTO> dtos = userProfileService.findMentorByCriteria(dtoRef);
+        return ResponseEntity.ok().body(dtos);
     }
 
 }

@@ -109,8 +109,8 @@ public class MentorshipSessionService {
             throw new TechBuddyUnprocessableException("Você não tem permissão para marcar essa mentoria como concluida!");
         }
 
-        if (sesh.getStatus() != SessionStatus.SCHEDULED && sesh.getStatus() != SessionStatus.WAITING_FOR_SCHEDULE) {
-            throw new TechBuddyUnprocessableException("Essa sessão não pode mais ser concluida, pois seu status atual é: " + sesh.getStatus());
+        if (sesh.getStatus() != SessionStatus.SCHEDULED) {
+            throw new TechBuddyUnprocessableException("Essa sessão não pode ser concluida, pois seu status atual é: " + sesh.getStatus());
         }
 
         sesh.setStatus(SessionStatus.COMPLETED);

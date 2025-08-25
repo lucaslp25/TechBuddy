@@ -1,20 +1,22 @@
 package com.lpdev.techbuddy.services;
 
-import com.lpdev.techbuddy.dto.MentorProfileViewDTO;
-import com.lpdev.techbuddy.dto.UpdateDevProfileDTO;
-import com.lpdev.techbuddy.dto.UpdateMentorProfileDTO;
-import com.lpdev.techbuddy.dto.UserProfileDTO;
+import com.lpdev.techbuddy.dto.*;
 import com.lpdev.techbuddy.exceptions.TechBuddyNotFoundException;
 import com.lpdev.techbuddy.exceptions.TechBuddyUnprocessableException;
 import com.lpdev.techbuddy.model.entities.DevProfile;
 import com.lpdev.techbuddy.model.entities.MentorProfile;
 import com.lpdev.techbuddy.model.entities.User;
 import com.lpdev.techbuddy.model.entities.UserProfile;
+import com.lpdev.techbuddy.repositories.MentorProfileRepository;
+import com.lpdev.techbuddy.repositories.MentorSpecifications;
 import com.lpdev.techbuddy.repositories.UserRepository;
 import com.lpdev.techbuddy.utils.AuthUtils;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,10 +25,12 @@ public class UserProfileService {
 
     private final UserRepository userRepository;
     private final AuthUtils authUtils;
+    private final MentorProfileRepository mentorProfileRepository;
 
-    public UserProfileService(UserRepository userRepository, AuthUtils authUtils) {
+    public UserProfileService(UserRepository userRepository, AuthUtils authUtils, MentorProfileRepository mentorProfileRepository) {
         this.userRepository = userRepository;
         this.authUtils = authUtils;
+        this.mentorProfileRepository = mentorProfileRepository;
     }
 
     @Transactional
@@ -88,7 +92,7 @@ public class UserProfileService {
     @Transactional(readOnly = true)
     public Set<MentorProfileViewDTO> findAllMentorProfiles() {
 
-        Set<MentorProfile> mentors = userRepository.findAllMentorProfiles();
+        List<MentorProfile> mentors = mentorProfileRepository.findAll();
 
         return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
     }
@@ -96,7 +100,7 @@ public class UserProfileService {
     @Transactional(readOnly = true)
     public Set<MentorProfileViewDTO> findAllAvailableMentorProfiles() {
 
-        Set<MentorProfile> mentors = userRepository.findAllAvailableMentorProfiles();
+        Set<MentorProfile> mentors = mentorProfileRepository.findAllAvailableMentorProfiles();
 
         return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
     }
@@ -104,7 +108,7 @@ public class UserProfileService {
     @Transactional(readOnly = true)
     public MentorProfileViewDTO findMentorProfileByUsername(String username) {
 
-        MentorProfile mentor = userRepository.findMentorProfileByUsername(username).orElseThrow(()-> new TechBuddyNotFoundException("Nenhum mentor com o username: " + username + " foi encontrado."));
+        MentorProfile mentor = mentorProfileRepository.findMentorProfileByUsername(username).orElseThrow(()-> new TechBuddyNotFoundException("Nenhum mentor com o username: " + username + " foi encontrado."));
 
         return new MentorProfileViewDTO(mentor);
     }
@@ -112,8 +116,21 @@ public class UserProfileService {
     @Transactional(readOnly = true)
     public Set<MentorProfileViewDTO> findMentorsProfileByStack(String stack) {
 
-        Set<MentorProfile> mentors = userRepository.findAllMentorProfilesByStack(stack);
+        Set<MentorProfile> mentors = mentorProfileRepository.findAllMentorProfilesByStack(stack);
 
         return mentors.stream().map(MentorProfileViewDTO::new).collect(Collectors.toSet());
+    }
+
+    @Transactional
+    public Set<MentorProfileViewDTO> findMentorByCriteria(MentorSearchCriteriaDTO dto){
+
+        Specification<MentorProfile> spec = MentorSpecifications.withCriteria(dto);
+
+        List<MentorProfile> mentors = mentorProfileRepository.findAll(spec);
+
+        return mentors.stream()
+                .map(MentorProfileViewDTO::new)
+                .collect(Collectors.toSet());
+
     }
 }
